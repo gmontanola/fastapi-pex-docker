@@ -1,0 +1,15 @@
+[tool.poetry]
+package-mode = false
+description = "Understading how pex works by playing with it."
+authors = ["Gabriel Montañola <gabriel@montanola.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
