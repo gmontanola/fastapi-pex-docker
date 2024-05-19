@@ -1,0 +1,3 @@
+FROM python:3.11-slim as srcs
+COPY build/src.pex /src.pex
+RUN PEX_TOOLS=1 /usr/local/bin/python3 src.pex venv --scope=srcs --compile /app

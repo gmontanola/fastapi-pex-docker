@@ -1,0 +1,3 @@
+FROM python:3.11-slim as deps
+COPY build/deps.pex /deps.pex
+RUN PEX_TOOLS=1 /usr/local/bin/python3 deps.pex venv --scope=deps --compile /app
