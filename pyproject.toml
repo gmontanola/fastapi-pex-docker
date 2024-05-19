@@ -1,13 +1,15 @@
 [tool.poetry]
-package-mode = false
+name = "appex"
 description = "Understading how pex works by playing with it."
 authors = ["Gabriel Montañola <gabriel@montanola.com>"]
 license = "MIT"
 readme = "README.md"
+version = "1.0.0"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = ">=3.11,<3.13"
 fastapi = "^0.111.0"
+sqlalchemy = "^2.0.30"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.4.4"
@@ -29,7 +31,8 @@ select = [
     "ARG001", # unused arguments in functions
 ]
 ignore = [
-    "E501",  # line too long, handled by black
+    "E501",
+    "B008",
 ]
 line-length = 100
 target-version = "py312"
