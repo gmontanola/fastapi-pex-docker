@@ -7,6 +7,9 @@ This is a simple example of how to use PEX to build nicely layered Docker images
 - Python `>=3.11` and `<3.13`
 - [PEX](https://docs.pex-tool.org/index.html)
 - [Poetry](https://python-poetry.org/)
+- _[Just](https://just.systems/man/en/chapter_4.html)_
+
+_Just is optional but really helpful_
 
 ## But wait... What is PEX?
 ### Claude Opus answer
@@ -52,11 +55,19 @@ pex pex requests -c pex -o ~/.local/bin/pex
 ```bash
 pex -r requirements.txt -o build/deps.pex --include-tools --platform="manylinux2014_aarch64-cp-311-cp311" --layout=packed
 pex -o build/src.pex --include-tools --platform="manylinux2014_aarch64-cp-311-cp3111" --layout=packed -P appex
-docker build . -t ttl.sh/src:1h --file Dockerfile.src
-docker build . -t ttl.sh/deps:1h --file Dockerfile.deps
-docker build . -t ttl.sh/app:1h --file Dockerfile.app
-docker run -p 8000:8000 ttl.sh/app:1h -m uvicorn appex.main:app --host 0.0.0.0
+docker build . -t ttl.sh/apppex:deps --file Dockerfile.deps
+docker build . -t ttl.sh/apppex:src --file Dockerfile.src
+docker build . -t ttl.sh/apppex:app --file Dockerfile.app
+docker run -p 8000:8000 ttl.sh/apppex:app -m uvicorn appex.main:app --host 0.0.0.0
 ```
+
+### If you have Just installed
+```bash
+just build
+just run-docker
+```
+
+Use `just --list` to check other available commands.
 
 ## Some details
 ### PEX building
