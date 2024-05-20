@@ -1,5 +1,5 @@
 FROM python:3.11-slim
-ARG repo=ttl.sh/appex
+
 COPY --from=ghcr.io/gmontanola/fastapi-pex-docker/appex:deps /app /app
 COPY --from=ghcr.io/gmontanola/fastapi-pex-docker/appex:src /app /app
 
