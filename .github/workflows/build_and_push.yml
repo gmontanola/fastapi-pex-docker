@@ -88,8 +88,6 @@ jobs:
           context: .
           push: true
           tags: "ghcr.io/${{ github.repository }}/${{ env.APP_NAME }}:app"
-          file: Dockerfile.app
+          file: Dockerfile.deploy
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            repo=ghcr.io/${{ github.repository }}/${{ env.APP_NAME }}
