@@ -7,8 +7,11 @@ on:
       - 'requirements.txt'
       - 'Dockerfile*'
   workflow_dispatch:
+name: Build and push Docker images
 jobs:
   build-and-push:
+    env:
+      APP_NAME: appex
     name: Build and push Docker images
     permissions:
       contents: read
@@ -53,7 +56,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: "ghcr.io/${{ github.repository }}/appex:deps"
+          tags: "ghcr.io/${{ github.repository }}/${{ env.APP_NAME }}:deps"
           file: Dockerfile.deps
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -67,7 +70,7 @@ jobs:
         if: steps.cache-src.outputs.cache-hit != 'true'
         run: |
           pex -o build/src.pex --include-tools \
-              --layout=packed -P appex
+              --layout=packed -P ${{ env.APP_NAME }}
       - name: Build and push src
         if: steps.build-src-pex.outputs.cache-hit != 'true'
         uses: docker/build-push-action@v5
@@ -75,7 +78,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: "ghcr.io/${{ github.repository }}/appex:src"
+          tags: "ghcr.io/${{ github.repository }}/${{ env.APP_NAME }}:src"
           file: Dockerfile.src
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -84,7 +87,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: "ghcr.io/${{ github.repository }}/appex:app"
+          tags: "ghcr.io/${{ github.repository }}/${{ env.APP_NAME }}:app"
           file: Dockerfile.app
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          build-args: |
+            repo=ghcr.io/${{ github.repository }}/${{ env.APP_NAME }}
