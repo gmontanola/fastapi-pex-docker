@@ -1,3 +1,5 @@
+import random
+
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
@@ -21,6 +23,11 @@ def get_db():
 @app.get("/")
 async def root() -> dict[str, str]:
     return {"message": "👋 🌎"}
+
+
+@app.get("/dice/")
+async def dice(sides: int = 6) -> dict[str, int]:
+    return {"🎲": random.randint(1, sides)}
 
 
 @app.post("/users/", response_model=schemas.User)
