@@ -8,7 +8,8 @@ on:
       - 'Dockerfile*'
   workflow_dispatch:
 jobs:
-  build:
+  build-and-push:
+    name: Build and push Docker images
     permissions:
       contents: read
       packages: write
